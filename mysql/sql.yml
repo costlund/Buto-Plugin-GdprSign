@@ -1,0 +1,38 @@
+db_account_gdpr_select_one:
+  sql: |
+    select 
+    id
+    ,account_id
+    ,version
+    from account_gdpr
+    where account_id='[user_id]'
+    order by CAST(version AS DECIMAL(10,2)) desc
+    limit 1
+    ;
+  select:
+    - id
+    - account_id
+    - version
+db_account_gdpr_insert:
+  sql: |
+    insert into account_gdpr (id, account_id, version)
+    values (uuid(), '[user_id]', '[SESSION:plugin/gdpr/sign/user/last_version]')
+    ;
+db_account_gdpr_select_many:
+  sql: |
+    select 
+    id
+    ,account_id
+    ,version
+    ,created_at
+    ,('_') as link
+    from account_gdpr
+    where account_id='[user_id]'
+    order by CAST(version AS DECIMAL(10,2)) desc
+    ;
+  select:
+    - id
+    - account_id
+    - version
+    - created_at
+    - link

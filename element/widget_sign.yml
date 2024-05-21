@@ -1,0 +1,47 @@
+-
+  type: div
+  settings:
+    enabled: globals:_SESSION/plugin/gdpr/sign/user/new_version
+    globals:
+      -
+        path_to_key: 'settings/plugin/i18n/translate_v1/settings/path'
+        value: '/plugin/gdpr/sign/i18n'
+  attribute: 
+    class: alert alert-warning
+  innerHTML:
+    -
+      type: div
+      innerHTML:
+        - 
+          type: strong
+          attribute:
+            class: content-colon
+          innerHTML: GDPR version
+        - 
+          type: span
+          innerHTML: globals:_SESSION/plugin/gdpr/sign/user/last_version
+    -
+      type: p
+      innerHTML: There is a new version of GDPR document who has to be approved!
+    -
+      type: p
+      attribute:
+        class: text-center
+      innerHTML: 
+        -
+          type: a
+          attribute: 
+            class: btn btn-secondary
+            onclick: "window.open('/theme/'+this.getAttribute('data-theme')+'/gdpr/'+this.getAttribute('data-version')+'.pdf')"
+            data-theme: globals:sys/theme
+            data-version: globals:_SESSION/plugin/gdpr/sign/user/last_version
+          innerHTML: Read document
+        -
+          type: a
+          attribute: 
+            class: btn btn-primary
+            id: gdpr_btn_approve
+            data-content-approving: Approving
+            data-content-Are_you_sure: Are you sure?
+            onclick: "PluginWfBootstrapjs.confirm({content: document.getElementById('gdpr_btn_approve').getAttribute('data-content-Are_you_sure'), method: function(){if(PluginWfBootstrapjs.confirm_data.ok){  PluginWfBootstrapjs.modal({id: 'gdpr_sign_capture', label: document.getElementById('gdpr_btn_approve').getAttribute('data-content-approving'), size: 'sm', url: '/gdpr/sign_capture'})  ;};}, data: {} })"
+          innerHTML: Approve

@@ -1,0 +1,97 @@
+readme:
+  name: Buto-Plugin-GdprSign
+  description: |
+    Plugin to handle GDPR approvals.
+    - Add folder /theme/[theme]/gdpr with file 1.0.pdf etc.
+    - Add a widget on a page where user has signed in with role client to show approval button and link to GDPR document.
+    - Check in session param plugin/gdpr/sign/user/new_version if any content should be hidden.
+    - Data is stored in db.account_gdpr.
+    - Show user list of approvals.
+  item:
+    -
+      name: Settings
+      description: |
+        ````
+        plugin_modules:
+          gdpr:
+            plugin: gdpr/sign
+        plugin:
+          gdpr:
+            sign:
+              enabled: true
+              data:
+                mysql: 'yml:/../buto_data/[theme]/mysql_[host].yml'
+        events:
+          signin:
+            -
+              plugin: 'gdpr/sign'
+              method: 'signin'
+        ````
+    -
+      name: Usage
+    -
+      name: Pages
+      item:
+        -
+          name: page_approvals
+          description: |
+            Page with list of approvals.
+        -
+          name: page_approvals_data
+          description: |
+            Json data.
+        -
+          name: page_sign_capture
+          description: |
+            Capture approval.
+    -
+      name: Widgets
+      item:
+        -
+          name: widget_sign
+          description: |
+            Widget to show buttons for approval or view GDPR document.
+            ````
+            type: widget
+            data:
+              plugin: 'gdpr/sign'
+              method: sign
+            ````
+    -
+      name: Event
+      item:
+        -
+          name: event_signin
+          description: |
+            Set data in session.
+            ````
+            plugin:
+              gdpr:
+                sign:
+                  user:
+                    version: '12.3'
+                    last_version: '12.3'
+                    new_version: false
+            ````
+    -
+      name: Construct
+      item:
+        -
+          name: __construct
+    -
+      name: Methods
+      item:
+        -
+          name: db_open
+        -
+          name: getSql
+        -
+          name: db_account_gdpr_select_one
+        -
+          name: db_account_gdpr_insert
+        -
+          name: db_account_gdpr_select_many
+        -
+          name: last_version
+          description: |
+            Get last version in folder.

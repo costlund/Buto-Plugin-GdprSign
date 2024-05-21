@@ -1,0 +1,23 @@
+-
+  type: widget
+  settings:
+    globals:
+      -
+        path_to_key: 'settings/plugin/i18n/translate_v1/settings/path'
+        value: '/plugin/gdpr/sign/i18n'
+  data:
+    plugin: wf/table
+    method: render_many
+    data:
+      id: _my_table_id_
+      class:
+        table: table-sm table-striped
+      field:
+        link: Version
+        created_at: Approved at
+      datatable:
+        ajax: /gdpr/approvals_data
+        order:
+          -
+            - 1
+            - desc
